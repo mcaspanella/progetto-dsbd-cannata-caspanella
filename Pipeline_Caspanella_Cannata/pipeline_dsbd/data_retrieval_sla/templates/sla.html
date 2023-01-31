@@ -1,0 +1,145 @@
+<html>
+<body>
+
+
+<form id="form1", onsubmit="return false;">
+    <label for="url-string">Inserisci la prima metrica da aggiungere all'SLA:</label><br>
+    <input type="text" id="url-string" name="url-string"><br>
+    
+    <label for="range_max">Inserisci il massimo:</label><br>
+    <input type="text" id="range_max" name="range_max"><br>
+    
+    <label for="range_min">Inserisci il minimo:</label><br>
+    <input type="text" id="range_min" name="range_min"><br>
+
+    <button type="button" onclick="submitForm('form1')">Inserisci</button>
+    <button type="button" onclick="verifyData1h('form1')">Verifica le violazioni nell'ultima ora</button>
+    <button type="button" onclick="verifyData3h('form1')">Verifica le violazioni nelle ultime 3 ore</button>
+    <button type="button" onclick="verifyData12h('form1')">Verifica le violazioni nelle ultime 12 ore</button><br>
+    <button type="button" onclick="verifyDataFuture('form1')">Verifica le possibili violazioni future</button><br>
+  
+  
+  </form>
+
+  <form id="form2", onsubmit="return false;">
+    <label for="url-string">Inserisci la seconda metrica da aggiungere all'SLA:</label><br>
+    <input type="text" id="url-string" name="url-string"><br>
+    
+    <label for="range_max">Inserisci il massimo:</label><br>
+    <input type="text" id="range_max" name="range_max"><br>
+    
+    <label for="range_min">Inserisci il minimo:</label><br>
+    <input type="text" id="range_min" name="range_min"><br>
+
+    <button type="button" onclick="submitForm('form2')">Inserisci</button>
+    <button type="button" onclick="verifyData1h('form2')">Verifica le violazioni nell'ultima ora</button>
+    <button type="button" onclick="verifyData3h('form2')">Verifica le violazioni nelle ultime 3 ore</button>
+    <button type="button" onclick="verifyData12h('form2')">Verifica le violazioni nelle ultime 12 ore</button><br>
+    <button type="button" onclick="verifyDataFuture('form2')">Verifica le possibili violazioni future</button><br>
+  
+  
+  
+  </form>
+  
+
+
+  <form id="form3", onsubmit="return false;">
+    <label for="url-string">Inserisci la terza metrica da aggiungere all'SLA:</label><br>
+    <input type="text" id="url-string" name="url-string"><br>
+    
+    <label for="range_max">Inserisci il massimo:</label><br>
+    <input type="text" id="range_max" name="range_max"><br>
+    
+    <label for="range_min">Inserisci il minimo:</label><br>
+    <input type="text" id="range_min" name="range_min"><br>
+
+    <button type="button" onclick="submitForm('form3')">Inserisci</button>
+    <button type="button" onclick="verifyData1h('form3')">Verifica le violazioni nell'ultima ora</button>
+    <button type="button" onclick="verifyData3h('form3')">Verifica le violazioni nelle ultime 3 ore</button>
+    <button type="button" onclick="verifyData12h('form3')">Verifica le violazioni nelle ultime 12 ore</button><br>
+    <button type="button" onclick="verifyDataFuture('form3')">Verifica le possibili violazioni future</button><br>
+  
+    
+
+  </form>
+
+  <form id="form4", onsubmit="return false;">
+    <label for="url-string">Inserisci la quarta metrica da aggiungere all'SLA:</label><br>
+    <input type="text" id="url-string" name="url-string"><br>
+    
+    <label for="range_max">Inserisci il massimo:</label><br>
+    <input type="text" id="range_max" name="range_max"><br>
+    
+    <label for="range_min">Inserisci il minimo:</label><br>
+    <input type="text" id="range_min" name="range_min"><br>
+
+    <button type="button" onclick="submitForm('form4')">Inserisci</button>
+    <button type="button" onclick="verifyData1h('form4')">Verifica le violazioni nell'ultima ora</button>
+    <button type="button" onclick="verifyData3h('form4')">Verifica le violazioni nelle ultime 3 ore</button>
+    <button type="button" onclick="verifyData12h('form4')">Verifica le violazioni nelle ultime 12 ore</button><br>
+    <button type="button" onclick="verifyDataFuture('form4')">Verifica le possibili violazioni future</button><br>
+  
+    
+    
+  </form>
+
+
+  <form id="form5", onsubmit="return false;">
+    <label for="url-string">Inserisci la quinta metrica da aggiungere all'SLA:</label><br>
+    <input type="text" id="url-string" name="url-string"><br>
+    
+    <label for="range_max">Inserisci il massimo:</label><br>
+    <input type="text" id="range_max" name="range_max"><br>
+    
+    <label for="range_min">Inserisci il minimo:</label><br>
+    <input type="text" id="range_min" name="range_min"><br>
+
+    <button type="button" onclick="submitForm('form5')">Inserisci</button>
+    <button type="button" onclick="verifyData1h('form5')">Verifica le violazioni nell'ultima ora</button>
+    <button type="button" onclick="verifyData3h('form5')">Verifica le violazioni nelle ultime 3 ore</button>
+    <button type="button" onclick="verifyData12h('form5')">Verifica le violazioni nelle ultime 12 ore</button><br>
+    <button type="button" onclick="verifyDataFuture('form5')">Verifica le possibili violazioni future</button><br>
+  
+    
+    
+  </form>
+
+</script>
+  <script>
+    
+      var urlh1 = {}, urlh3 = {}, urlh12 = {}, urlhFuture ={}
+      function submitForm(formID) {
+      var form = document.getElementById(formID);
+      // Ottieni la stringa inserita dall'utente
+        var urlString = form.elements["url-string"].value;
+        var range_max = form.elements["range_max"].value;
+        var range_min = form.elements["range_min"].value;
+      // Costruisci l'URL utilizzando la stringa inserita dall'utente
+      urlh1[formID] = "http://localhost:5100/sla/1h/" + urlString + '/' + range_max + '/' + range_min;
+      urlh3[formID] = "http://localhost:5100/sla/3h/" + urlString + '/' + range_max + '/' + range_min;
+      urlh12[formID] = "http://localhost:5100/sla/12h/" + urlString + '/' + range_max + '/' + range_min;
+      urlhFuture[formID] = "http://localhost:5100/sla/future/" + urlString + '/' + range_max + '/' + range_min;
+      // Redireziona l'utente all'URL costruito
+    }
+      function verifyData1h(formID) {
+          // Utilizza la variabile url
+          window.location.href =  urlh1[formID];
+      }
+      function verifyData3h(formID) {
+          // Utilizza la variabile url
+          window.location.href = urlh3[formID];
+      }
+      function verifyData12h(formID) {
+          // Utilizza la variabile url
+          window.location.href = urlh12[formID];
+      }
+      function verifyDataFuture(formID) {
+          // Utilizza la variabile url
+          window.location.href =  urlhFuture[formID];
+      }
+    
+  </script> 
+
+</body>
+</html>
+

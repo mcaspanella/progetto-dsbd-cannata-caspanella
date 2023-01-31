@@ -1,0 +1,107 @@
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "kafka:9092"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 0s
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+
+  transform:
+    build: 
+      dockerfile: Dockerfile
+      target: transform
+    depends_on:
+      kafka:
+        condition: service_healthy
+    restart: always
+    volumes:
+      - ./transform:/app
+      - ./kafka:/app/kafka_config
+    environment:
+      PYTHONUNBUFFERED: 1
+
+  extract:
+    build:
+      dockerfile: Dockerfile
+      target: extract
+    depends_on:
+      kafka:
+        condition: service_healthy
+    restart: always
+    volumes:
+      - ./data:/data
+      - ./kafka:/app/kafka_config
+      - ./extract:/app
+    environment:
+      PYTHONUNBUFFERED: 1
+  
+  load:
+    build:
+      dockerfile: Dockerfile
+      target: load
+    depends_on:
+      kafka:
+        condition: service_healthy
+    restart: always
+    volumes:
+      - ./load:/app
+      - ./kafka:/app/kafka_config
+    environment:
+      PYTHONUNBUFFERED: 1
+    
+  data_retrieval_sla:
+    build:
+      dockerfile: Dockerfile
+      target: data_retrieval_sla
+    depends_on:
+      - postgres  
+    restart: always
+    volumes:
+      - ./data_retrieval_sla:/app
+      - ./data:/data
+    ports: 
+      - "5100:5000"
+    environment:
+      PYTHONUNBUFFERED: 1
+
+  postgres:
+      image: postgres:13
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_DB: project_DSBD
+        POSTGRES_PASSWORD: admin
+
+        POSTGRES_HOST_AUTH_METHOD: trust
+      restart: always
+
+
+  postgres-db-adminer:
+    image: adminer
+    depends_on:
+      - postgres
+    restart: always
+    ports: 
+      - "8080:8080"
+
+ 

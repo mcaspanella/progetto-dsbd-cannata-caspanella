@@ -1,0 +1,83 @@
+<html>
+<body>
+
+<p><a href="http://localhost:5100/all_metrics">Lista di tutte le metriche</a></p>
+
+<p><a href="http://localhost:5100/all_metadata_metrics">Lista delle metriche di cui sono disponibili i metadati</a></p>
+
+
+<form onsubmit="return false;">
+    <label for="url-string">Inserisci la metrica desiderata per ottenere i valori di max, min, avg e dev_std nell'ultima ora:</label>
+    <input type="text" id="url-string-1h" name="url-string">
+    <button type="button" onclick="submitForm_1h()">Invia</button>
+  </form>
+  
+  <script>
+    function submitForm_1h() {
+      // Ottieni la stringa inserita dall'utente
+      var urlString = document.getElementById("url-string-1h").value;
+      // Costruisci l'URL utilizzando la stringa inserita dall'utente
+      var url = "http://localhost:5100/stats_1h/" + urlString;
+      // Redireziona l'utente all'URL costruito
+      window.location.href = url;
+    }
+  </script> 
+
+<form onsubmit="return false;">
+    <label for="url-string">Inserisci la metrica desiderata per ottenere i valori di max, min, avg e dev_std nelle ultime 3 ore:</label>
+    <input type="text" id="url-string-3h" name="url-string">
+    <button type="button" onclick="submitForm_3h()">Invia</button>
+  </form>
+  
+  <script>
+    function submitForm_3h() {
+      // Ottieni la stringa inserita dall'utente
+      var urlString = document.getElementById("url-string-3h").value;
+      // Costruisci l'URL utilizzando la stringa inserita dall'utente
+      var url = "http://localhost:5100/stats_3h/" + urlString;
+      // Redireziona l'utente all'URL costruito
+      window.location.href = url;
+    }
+  </script>
+
+
+<form onsubmit="return false;">
+    <label for="url-string">Inserisci la metrica desiderata per ottenere i valori di max, min, avg e dev_std nelle ultime 12 ore:</label>
+    <input type="text" id="url-string-12h" name="url-string">
+    <button type="button" onclick="submitForm_12h()">Invia</button>
+  </form>
+  
+  <script>
+    function submitForm_12h() {
+      // Ottieni la stringa inserita dall'utente
+      var urlString = document.getElementById("url-string-12h").value;
+      // Costruisci l'URL utilizzando la stringa inserita dall'utente
+      var url = "http://localhost:5100/stats_12h/" + urlString;
+      // Redireziona l'utente all'URL costruito
+      window.location.href = url;
+    }
+  </script>
+
+<form onsubmit="return false;">
+    <label for="url-string">Inserisci la metrica desiderata, tra quelle disponibili, di cui vuoi consultare metadati:</label>
+    <input type="text" id="url-string-m" name="url-string">
+    <button type="button" onclick="submitForm_m()">Invia</button>
+  </form>
+  
+  <script>
+    function submitForm_m() {
+      // Ottieni la stringa inserita dall'utente
+      var urlString = document.getElementById("url-string-m").value;
+      // Costruisci l'URL utilizzando la stringa inserita dall'utente
+      var url = "http://localhost:5100/metadata/" + urlString;
+      // Redireziona l'utente all'URL costruito
+      window.location.href = url;
+    }
+  </script>
+
+  
+  <p><a href="http://localhost:5100/sla">Vai alla configurazione dell'sla</a></p>
+  
+</body>
+</html>
+
